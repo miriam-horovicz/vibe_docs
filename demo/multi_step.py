@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Demo: ask_master flow
-Shows how Research Manager can ask user for clarification
+Demo: Multi-step research
+Shows Research Manager delegating multiple subtasks to Research Agent
 """
 
 import asyncio
@@ -18,8 +18,8 @@ from vibe_docs.agents import build_research_manager_config, build_research_agent
 
 async def main():
     print("=" * 60)
-    print("  Ask Master Flow Demo")
-    print("  Human-in-the-loop with ask_master tool")
+    print("  Multi-Step Research Demo")
+    print("  Manager delegates multiple subtasks to Research Agent")
     print("=" * 60)
     print()
 
@@ -83,10 +83,10 @@ async def main():
     print("  - route_to_research_agent")
     print()
 
-    # Ambiguous query that should trigger ask_master
-    query = "Tell me about AI"
-    print(f"[START] Ambiguous query: '{query}'")
-    print("        (This may trigger ask_master for clarification)")
+    # Multi-part research query
+    query = "Compare Python and JavaScript: which is better for web development and which for data science?"
+    print(f"[START] Multi-part query:")
+    print(f"  '{query}'")
     print("-" * 60)
     print()
 
@@ -97,30 +97,11 @@ async def main():
         initiator="human",
     )
 
-    # Check for human tasks (ask_master)
-    ready_tasks = orch.graph_ops.get_ready_tasks()
-    human_tasks = [
-        tid for tid in ready_tasks
-        if orch.graph_ops.modal.nodes[tid].agent_id == "human"
-    ]
-
-    if human_tasks:
-        print()
-        print("=" * 60)
-        print("[ASK_MASTER] Agent requested clarification:")
-        for task_id in human_tasks:
-            node = orch.graph_ops.modal.nodes[task_id]
-            print(f"  Question: {node.task_payload}")
-        print("=" * 60)
-        print()
-        print("(In interactive mode, you would answer and resume)")
-    else:
-        print()
-        print("=" * 60)
-        print("[RESULT]")
-        print("=" * 60)
-        print(result)
-
+    print()
+    print("=" * 60)
+    print("[RESULT]")
+    print("=" * 60)
+    print(result)
     print()
     print(f"[INFO] Logs saved to: {orch._run_dir}")
 
