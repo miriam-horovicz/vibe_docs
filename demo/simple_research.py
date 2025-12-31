@@ -65,24 +65,10 @@ async def main():
         },
         handler=lambda x: {"result": f"Web search placeholder for: {x.get('query', '')}"},
     )
-
-    # route_to_research_agent tool
-    orch.register_tool(
-        name="route_to_research_agent",
-        description="Delegate research to the research agent specialist",
-        input_schema={
-            "type": "object",
-            "properties": {
-                "request": {"type": "string", "description": "Research request"}
-            },
-            "required": ["request"]
-        },
-        handler=lambda x: {},
-        tool_type="route_to",
-    )
+    # Note: route_to_research_agent is auto-registered when research_agent is created
 
     print("  - search_web")
-    print("  - route_to_research_agent")
+    print("  - route_to_research_agent (auto-registered)")
     print()
 
     # Simple research query

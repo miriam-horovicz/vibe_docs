@@ -9,9 +9,7 @@ description = "Research agents for document and web research"
 readme = "README.md"
 requires-python = ">=3.9"
 dependencies = [
-    "anthropic>=0.18.0",
-    "openai>=1.0.0",
-    "pydantic>=2.0.0",
+    "ai-orchestration @ git+https://github.com/f-labs-io/ai-orchestration.git@master",
 ]
 
 [project.optional-dependencies]
